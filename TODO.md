@@ -1,8 +1,6 @@
-# TODO: Membuat Kolom Deskripsi Wrap Text di Daftar Layanan
-
-## Pending Tasks
-- [x] Update kolom deskripsi di resources/views/admin/layanan/index.blade.php untuk wrap text
-- [x] Update kolom deskripsi di resources/views/petugas/layanan/index.blade.php untuk wrap text
-- [x] Build ulang assets jika diperlukan (npm run build)
-- [x] Test aplikasi untuk memastikan deskripsi wrap dengan benar tanpa melebihi halaman (Server Laravel berjalan di http://127.0.0.1:8000)
-- [x] Semua tugas selesai
+- [x] Update StatisticsController to calculate statistics in the index method and pass to view
+- [x] Update statistics/index.blade.php to use passed data instead of direct model queries
+- [x] Remove role middleware from statistics route to allow all authenticated users access
+- [x] Remove daily and weekly chart options from StatisticsController
+- [x] Implement automatic chart type selection based on available data
+- [x] Test that statistics display correctly for both admin and petugas roles

@@ -13,7 +13,7 @@
                         @csrf
                         <div class="mb-4">
                             <label for="layanan_id" class="block text-sm font-medium text-gray-700">Layanan</label>
-                            <select id="layanan_id" name="layanan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm" onchange="updateLampiran()">
+                            <select id="layanan_id" name="layanan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" onchange="updateLampiran()">
                                 @foreach($layanans as $layanan)
                                 <option value="{{ $layanan->id }}">{{ $layanan->nama_layanan }}</option>
                                 @endforeach
@@ -21,19 +21,23 @@
                         </div>
                         <div class="mb-4">
                             <label for="unit_kerja" class="block text-sm font-medium text-gray-700">Unit Kerja Tujuan</label>
-                            <select id="unit_kerja" name="unit_kerja" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+                            <select id="unit_kerja" name="unit_kerja" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
                                 <option value="">Pilih Unit Kerja</option>
                                 <option value="Sub bagian TU">Sub bagian TU</option>
                                 <option value="Penma">Penma</option>
                                 <option value="PAIS">PAIS</option>
                                 <option value="PdPontren">PdPontren</option>
                                 <option value="BIMAS Islam">BIMAS Islam</option>
+                                <option value="Garazawa">GaraZawa</option>
+                                <option value="Garakristen">GaraKristen</option>
+                                <option value="Garakatolik">Gara Katolik</option>
+                                <option value="Garabudha">GaraBudha</option>
                                 <option value="PLHUT">PLHUT</option>
                             </select>
                         </div>
                         <div class="mb-4">
                             <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi Permohonan</label>
-                            <textarea id="deskripsi" name="deskripsi" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"></textarea>
+                            <textarea id="deskripsi" name="deskripsi" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"></textarea>
                         </div>
                         <div class="mb-4">
                             <h3 class="text-lg font-medium mb-2">Lampiran Persyaratan</h3>
@@ -42,7 +46,7 @@
                                     @foreach($layanans->first()->persyaratan as $index => $persyaratan)
                                     <div class="mb-2">
                                         <label for="lampiran_{{ $index }}" class="block text-sm font-medium text-gray-700">{{ $persyaratan->nama_persyaratan }}</label>
-                                        <input type="file" id="lampiran_{{ $index }}" name="lampiran[{{ $index }}]" class="mt-1 block w-full" />
+                                        <input type="file" id="lampiran_{{ $index }}" name="lampiran[{{ $index }}]" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" />
                                     </div>
                                     @endforeach
                                 @endif
@@ -71,7 +75,7 @@
                     div.className = 'mb-2';
                     div.innerHTML = `
                         <label for="lampiran_${index}" class="block text-sm font-medium text-gray-700">${persyaratan.nama_persyaratan}</label>
-                        <input type="file" id="lampiran_${index}" name="lampiran[${index}]" class="mt-1 block w-full" />
+                        <input type="file" id="lampiran_${index}" name="lampiran[${index}]" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" />
                     `;
                     container.appendChild(div);
                 });

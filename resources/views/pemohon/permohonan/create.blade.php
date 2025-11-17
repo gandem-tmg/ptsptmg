@@ -28,6 +28,10 @@
                                 <option value="PAIS">PAIS</option>
                                 <option value="PdPontren">PdPontren</option>
                                 <option value="BIMAS Islam">BIMAS Islam</option>
+                                <option value="Garazawa">GaraZawa</option>
+                                <option value="Garakristen">GaraKristen</option>
+                                <option value="Garakatolik">Gara Katolik</option>
+                                <option value="Garabudha">GaraBudha</option>
                                 <option value="PLHUT">PLHUT</option>
                             </select>
                         </div>

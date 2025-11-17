@@ -20,6 +20,9 @@
                     </x-nav-link>
 
                     @if(Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('statistics.index')" :active="request()->routeIs('statistics.*')">
+                            {{ __('Statistik') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                             {{ __('Users') }}
                         </x-nav-link>
@@ -33,6 +36,9 @@
                             {{ __('Permohonan') }}
                         </x-nav-link>
                     @elseif(Auth::user()->role === 'petugas')
+                        <x-nav-link :href="route('statistics.index')" :active="request()->routeIs('statistics.*')">
+                            {{ __('Statistik') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('petugas.layanan.index')" :active="request()->routeIs('petugas.layanan.*')">
                             {{ __('Layanan') }}
                         </x-nav-link>
@@ -107,6 +113,9 @@
             </x-responsive-nav-link>
 
             @if(Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('statistics.index')" :active="request()->routeIs('statistics.*')">
+                    {{ __('Statistik') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
@@ -120,6 +129,9 @@
                     {{ __('Permohonan') }}
                 </x-responsive-nav-link>
             @elseif(Auth::user()->role === 'petugas')
+                <x-responsive-nav-link :href="route('statistics.index')" :active="request()->routeIs('statistics.*')">
+                    {{ __('Statistik') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('petugas.layanan.index')" :active="request()->routeIs('petugas.layanan.*')">
                     {{ __('Layanan') }}
                 </x-responsive-nav-link>

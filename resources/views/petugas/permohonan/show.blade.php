@@ -19,6 +19,9 @@
                                 <strong>Pemohon:</strong> {{ $permohonan->user ? $permohonan->user->name : $permohonan->nama }}
                             </div>
                             <div>
+                                <strong>No. HP:</strong> {{ $permohonan->user ? $permohonan->user->no_hp : $permohonan->no_hp }}
+                            </div>
+                            <div>
                                 <strong>Layanan:</strong> {{ $permohonan->layanan->nama_layanan }}
                             </div>
                             <div>
@@ -96,13 +99,31 @@
                         </form>
                     </div>
 
-                    <div class="flex justify-start">
+                    <div class="flex justify-between">
                         <a href="{{ route('petugas.permohonan.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                             Kembali
                         </a>
+                        <button onclick="printToPosPrinter()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Cetak ke ZPRINTER POS-80
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function printToPosPrinter() {
+            // Open PDF in new window for printing
+            const pdfUrl = '{{ route("petugas.permohonan.pdf", $permohonan) }}';
+            const printWindow = window.open(pdfUrl, '_blank');
+
+            // Wait for PDF to load then print
+            printWindow.onload = function() {
+                printWindow.print();
+                // Close the window after printing (optional)
+                // printWindow.close();
+            };
+        }
+    </script>
 </x-app-layout>

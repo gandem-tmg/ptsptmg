@@ -29,6 +29,9 @@
                         <strong>Pemohon:</strong> {{ $permohonan->user ? $permohonan->user->name : $permohonan->nama }}
                     </div>
                     <div class="mb-4">
+                        <strong>No. HP:</strong> {{ $permohonan->user ? $permohonan->user->no_hp : $permohonan->no_hp }}
+                    </div>
+                    <div class="mb-4">
                         <strong>Unit Kerja:</strong> {{ $permohonan->unit_kerja }}
                     </div>
                     <div class="mb-4">

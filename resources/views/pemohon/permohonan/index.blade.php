@@ -74,8 +74,33 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="mt-4">
-                        {{ $permohonans->appends(request()->query())->links() }}
+                    <div class="mt-6 flex items-center justify-between">
+                        <div class="text-sm text-gray-700">
+                            Menampilkan {{ $permohonans->firstItem() ?? 0 }} sampai {{ $permohonans->lastItem() ?? 0 }} dari {{ $permohonans->total() }} hasil
+                        </div>
+                        <div class="flex space-x-1">
+                            @if($permohonans->hasPages())
+                                @if($permohonans->onFirstPage())
+                                    <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">Sebelumnya</span>
+                                @else
+                                    <a href="{{ $permohonans->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Sebelumnya</a>
+                                @endif
+
+                                @foreach($permohonans->getUrlRange(1, $permohonans->lastPage()) as $page => $url)
+                                    @if($page == $permohonans->currentPage())
+                                        <span class="px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md">{{ $page }}</span>
+                                    @else
+                                        <a href="{{ $url }}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">{{ $page }}</a>
+                                    @endif
+                                @endforeach
+
+                                @if($permohonans->hasMorePages())
+                                    <a href="{{ $permohonans->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Selanjutnya</a>
+                                @else
+                                    <span class="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-100 rounded-md cursor-not-allowed">Selanjutnya</span>
+                                @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

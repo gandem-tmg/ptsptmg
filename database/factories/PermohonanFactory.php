@@ -21,8 +21,10 @@ class PermohonanFactory extends Factory
             'layanan_id' => Layanan::factory(),
             'tanggal_pengajuan' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'status' => $this->faker->randomElement(['Diajukan', 'Verifikasi', 'Proses', 'Selesai', 'Ditolak']),
+            'no_tiket' => 'TKT-' . strtoupper(uniqid()),
             'no_tiket_admin' => $this->faker->optional()->bothify('TICKET-####'),
             'catatan_admin' => $this->faker->optional()->sentence(),
+            'unit_kerja' => $this->faker->randomElement(['Sub bagian TU', 'Penma', 'PAIS', 'PdPontren', 'BIMAS Islam', 'PLHUT']),
         ];
     }
 }

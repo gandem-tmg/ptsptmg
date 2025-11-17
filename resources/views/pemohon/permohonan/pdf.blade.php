@@ -3,60 +3,84 @@
 <head>
     <title>Bukti Pengajuan Permohonan</title>
     <style>
+        @page {
+            size: 80mm auto;
+            margin: 2mm;
+        }
         body {
-            font-family: 'Times New Roman', 'DejaVu Serif', serif;
-            font-size: 12px;
-            line-height: 1.4;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+            line-height: 1.1;
             margin: 0;
-            padding: 20px;
+            padding: 2mm;
+            height: auto;
+            page-break-inside: avoid;
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
+            margin-bottom: 5px;
         }
         .header h1 {
             margin: 0;
-            font-size: 18px;
+            font-size: 11px;
             font-weight: bold;
         }
+        .header p {
+            margin: 2px 0;
+            font-size: 9px;
+        }
+        .header img {
+            width: 100%;
+            margin-bottom: 3px;
+        }
+        .header img.kop-surat {
+            width: 100%;
+            height: auto;
+        }
         .content {
-            margin: 20px 0;
+            margin: 3px 0;
         }
         .field {
-            margin-bottom: 15px;
+            margin-bottom: 3px;
             clear: both;
         }
         .label {
             font-weight: bold;
             display: inline-block;
-            width: 150px;
+            width: 22mm;
             vertical-align: top;
+            font-size: 10px;
         }
         .value {
             display: inline-block;
-            max-width: calc(100% - 160px);
+            max-width: calc(100% - 25mm);
             word-wrap: break-word;
+            font-size: 10px;
         }
         .lampiran-list {
-            margin-top: 10px;
+            margin-top: 2px;
         }
         .lampiran-list li {
-            margin-bottom: 5px;
+            margin-bottom: 1px;
+            font-size: 7px;
         }
         .footer {
-            margin-top: 40px;
+            margin-top: 5px;
             text-align: center;
-            font-size: 10px;
+            font-size: 7px;
             color: #666;
+        }
+        .footer img {
+            width: 50mm;
+            height: auto;
+            margin-bottom: 2px;
         }
     </style>
 </head>
 <body>
     <div class="header">
+        <img src="{{ public_path('KOP_SURAT.PNG') }}" alt="Kop Surat" class="kop-surat" style="margin-bottom: 5px;">
         <h1>BUKTI PENGAJUAN PERMOHONAN</h1>
-        <p>KEMENTERIAN AGAMA KABUPATEN TEMANGGUNG</p>
     </div>
 
     <div class="content">
@@ -99,6 +123,11 @@
             <span class="value">{{ $permohonan->layanan->nama_layanan }}</span>
         </div>
 
+        <div class="field">
+            <span class="label">Unit Kerja:</span>
+            <span class="value">{{ $permohonan->unit_kerja }}</span>
+        </div>
+
         @if($permohonan->deskripsi)
         <div class="field">
             <span class="label">Deskripsi:</span>
@@ -136,6 +165,7 @@
     </div>
 
     <div class="footer">
+        <img src="{{ public_path('QR_CODE.PNG') }}" alt="QR Code" class="qr-code">
         <p>Dokumen ini merupakan bukti resmi pengajuan permohonan</p>
         <p>Dicetak pada: {{ now()->format('d-m-Y H:i:s') }}</p>
     </div>

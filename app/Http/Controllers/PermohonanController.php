@@ -74,7 +74,7 @@ class PermohonanController extends Controller
     {
         $request->validate([
             'layanan_id' => 'required|exists:layanan,id',
-            'unit_kerja' => 'required|string|in:Sub bagian TU,Penma,PAIS,PdPontren,BIMAS Islam,PLHUT',
+            'unit_kerja' => 'required|string|in:Sub bagian TU,Penma,PAIS,PdPontren,BIMAS Islam,PLHUT,Garazawa,Garakristen,Garakatolik,Garabudha',
             'lampiran.*' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
@@ -105,7 +105,7 @@ class PermohonanController extends Controller
         $permohonan->load('lampiranPermohonan.persyaratan');
 
         // Generate PDF as proof of submission
-        $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'));
+        $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'))->setPaper([0, 0, 252, 432], 'portrait');
         $pdfPath = 'permohonan_pdf/' . $permohonan->no_tiket . '.pdf';
         Storage::disk('public')->put($pdfPath, $pdf->output());
 
@@ -161,7 +161,7 @@ class PermohonanController extends Controller
 
         if (!file_exists($pdfPath)) {
             // Generate PDF if not exists
-            $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'));
+            $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'))->setPaper([0, 0, 252, 432], 'portrait');
             Storage::disk('public')->put('permohonan_pdf/' . $permohonan->no_tiket . '.pdf', $pdf->output());
         }
 
@@ -264,7 +264,7 @@ class PermohonanController extends Controller
 
         $request->validate([
             'layanan_id' => 'required|exists:layanan,id',
-            'unit_kerja' => 'required|string|in:Sub bagian TU,Penma,PAIS,PdPontren,BIMAS Islam,PLHUT',
+            'unit_kerja' => 'required|string|in:Sub bagian TU,Penma,PAIS,PdPontren,BIMAS Islam,PLHUT,Garazawa,Garakristen,Garakatolik,Garabudha',
             'deskripsi' => 'nullable|string',
             'lampiran.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
@@ -312,7 +312,7 @@ class PermohonanController extends Controller
         $permohonan->load('lampiranPermohonan.persyaratan');
 
         // Generate PDF as proof of submission
-        $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'));
+        $pdf = Pdf::loadView('pemohon.permohonan.pdf', compact('permohonan'))->setPaper([0, 0, 252, 432], 'portrait');
         $pdfPath = 'permohonan_pdf/' . $permohonan->no_tiket . '.pdf';
         Storage::disk('public')->put($pdfPath, $pdf->output());
 

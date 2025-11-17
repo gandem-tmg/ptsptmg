@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    // Statistics route (accessible by authenticated users)
+    Route::get('/statistics', [App\Http\Controllers\StatisticsController::class, 'index'])->name('statistics.index');
+
     // Admin routes
     Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('users', UserController::class);
@@ -44,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('persyaratan', PersyaratanController::class)->only(['index', 'show']);
         Route::get('permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
         Route::get('permohonan/{permohonan}', [PermohonanController::class, 'show'])->name('permohonan.show');
+        Route::get('permohonan/{permohonan}/pdf', [PermohonanController::class, 'downloadPdf'])->name('permohonan.pdf');
         Route::patch('permohonan/{permohonan}/status', [PermohonanController::class, 'updateStatus'])->name('permohonan.updateStatus');
         Route::delete('permohonan/{permohonan}', [PermohonanController::class, 'destroy'])->name('permohonan.destroy');
     });
