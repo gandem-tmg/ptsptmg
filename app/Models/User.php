@@ -25,6 +25,8 @@ class User extends Authenticatable
         'role',
         'no_hp',
         'alamat',
+        'provider',
+        'provider_id',
     ];
 
     /**

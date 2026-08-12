@@ -6,6 +6,7 @@ use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\PersyaratanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,10 @@ Route::post('/permohonan', [PermohonanController::class, 'guestStore'])->name('g
 Route::get('/permohonan/{permohonan}/pdf', [PermohonanController::class, 'downloadPdf'])->name('guest.permohonan.pdf');
 Route::get('/cari-tiket', [PermohonanController::class, 'searchTicket'])->name('guest.searchTicket');
 Route::post('/cari-tiket', [PermohonanController::class, 'showTicket'])->name('guest.showTicket');
+
+// Socialite Google login routes
+Route::get('auth/google/redirect', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
+Route::get('auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
