@@ -1,3 +1,122 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-100 text-slate-800 antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-slate-900 tracking-tight;
+    }
+}
+
+@layer components {
+    .soft-card {
+        @apply rounded-2xl border border-slate-200 bg-white/90 shadow-sm backdrop-blur-sm;
+    }
+
+    .primary-btn {
+        @apply inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition duration-200 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+    }
+
+    .secondary-btn {
+        @apply inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition duration-200 hover:border-slate-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2;
+    }
+
+    .nav-link {
+        @apply inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition duration-200 hover:bg-emerald-50 hover:text-emerald-700;
+    }
+
+    .field-label {
+        @apply mb-2 block text-sm font-medium text-slate-700;
+    }
+
+    .form-input {
+        @apply mt-1 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm transition duration-200 placeholder:text-slate-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200;
+    }
+
+    /* Shared surface for all authenticated admin and officer screens. */
+    .workspace-page,
+    .internal-workspace > .py-12 {
+        @apply py-2 sm:py-4;
+    }
+
+    .workspace-page > div,
+    .internal-workspace > .py-12 > div {
+        @apply max-w-none px-0 sm:px-0 lg:px-0;
+    }
+
+    .workspace-page .bg-white.overflow-hidden,
+    .internal-workspace .bg-white.overflow-hidden {
+        @apply rounded-2xl border border-slate-200 shadow-sm;
+    }
+
+    .workspace-page .bg-white.overflow-hidden > .p-6,
+    .internal-workspace .bg-white.overflow-hidden > .p-6 {
+        @apply p-5 text-slate-800;
+    }
+
+    .workspace-page table,
+    .internal-workspace table {
+        @apply w-full border-separate border-spacing-0;
+    }
+
+    .workspace-page table thead,
+    .internal-workspace table thead {
+        @apply bg-slate-50;
+    }
+
+    .workspace-page table th,
+    .internal-workspace table th {
+        @apply border-y border-slate-200 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500;
+    }
+
+    .workspace-page table td,
+    .internal-workspace table td {
+        @apply border-b border-slate-100 px-5 py-4 text-sm text-slate-600;
+    }
+
+    .workspace-page table tbody tr,
+    .internal-workspace table tbody tr {
+        @apply transition hover:bg-emerald-50/40;
+    }
+
+    .workspace-page input:not([type='checkbox']):not([type='radio']),
+    .workspace-page select,
+    .workspace-page textarea,
+    .internal-workspace input:not([type='checkbox']):not([type='radio']),
+    .internal-workspace select,
+    .internal-workspace textarea {
+        @apply rounded-xl border-slate-300 text-sm shadow-sm focus:border-emerald-500 focus:ring-emerald-200;
+    }
+
+    .workspace-page a.text-indigo-600,
+    .internal-workspace a.text-indigo-600 {
+        @apply font-semibold text-emerald-700 transition hover:text-emerald-900;
+    }
+
+    .workspace-page button.text-red-600,
+    .internal-workspace button.text-red-600 {
+        @apply font-semibold text-rose-600 transition hover:text-rose-800;
+    }
+
+    .workspace-page .bg-blue-500,
+    .workspace-page .bg-indigo-500,
+    .internal-workspace .bg-blue-500,
+    .internal-workspace .bg-indigo-500 {
+        @apply bg-emerald-600;
+    }
+
+    .workspace-page .hover\:bg-blue-700:hover,
+    .workspace-page .hover\:bg-indigo-700:hover,
+    .internal-workspace .hover\:bg-blue-700:hover,
+    .internal-workspace .hover\:bg-indigo-700:hover {
+        @apply bg-emerald-700;
+    }
+}

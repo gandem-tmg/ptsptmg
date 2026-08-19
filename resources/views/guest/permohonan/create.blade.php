@@ -1,64 +1,72 @@
 <x-guest-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Ajukan Permohonan Baru') }}
-        </h2>
-    </x-slot>
+    <div class="w-full">
+        <div class="mb-6 flex items-center justify-between gap-3">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-600">Langkah 2</p>
+                <h2 class="mt-2 text-2xl font-bold text-slate-900">Ajukan Permohonan</h2>
+            </div>
+            <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700">2 / 2</span>
+        </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('guest.permohonan.store') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="layanan_id" class="block text-sm font-medium text-gray-700">Layanan</label>
-                            <select id="layanan_id" name="layanan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" onchange="updateLampiran()">
-                                @foreach($layanans as $layanan)
-                                <option value="{{ $layanan->id }}">{{ $layanan->nama_layanan }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="unit_kerja" class="block text-sm font-medium text-gray-700">Unit Kerja Tujuan</label>
-                            <select id="unit_kerja" name="unit_kerja" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
-                                <option value="">Pilih Unit Kerja</option>
-                                <option value="Sub bagian TU">Sub bagian TU</option>
-                                <option value="Penma">Penma</option>
-                                <option value="PAIS">PAIS</option>
-                                <option value="PdPontren">PdPontren</option>
-                                <option value="BIMAS Islam">BIMAS Islam</option>
-                                <option value="Garazawa">GaraZawa</option>
-                                <option value="Garakristen">GaraKristen</option>
-                                <option value="Garakatolik">Gara Katolik</option>
-                                <option value="Garabudha">GaraBudha</option>
-                                <option value="PLHUT">PLHUT</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi Permohonan</label>
-                            <textarea id="deskripsi" name="deskripsi" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"></textarea>
-                        </div>
-                        <div class="mb-4">
-                            <h3 class="text-lg font-medium mb-2">Lampiran Persyaratan</h3>
-                            <div id="lampiran-container">
-                                @if($layanans->isNotEmpty() && $layanans->first()->persyaratan->isNotEmpty())
-                                    @foreach($layanans->first()->persyaratan as $index => $persyaratan)
-                                    <div class="mb-2">
-                                        <label for="lampiran_{{ $index }}" class="block text-sm font-medium text-gray-700">{{ $persyaratan->nama_persyaratan }}</label>
-                                        <input type="file" id="lampiran_{{ $index }}" name="lampiran[{{ $index }}]" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" />
-                                    </div>
-                                    @endforeach
-                                @endif
+        <div class="mb-6 rounded-2xl border border-sky-100 bg-sky-50 p-4">
+            <p class="text-sm font-medium text-sky-800">Pilih layanan, tentukan unit kerja, lalu unggah file persyaratan sesuai kebutuhan.</p>
+        </div>
+
+        <form method="POST" action="{{ route('guest.permohonan.store') }}" enctype="multipart/form-data" class="space-y-4">
+            @csrf
+
+            <div>
+                <label for="layanan_id" class="field-label">Layanan</label>
+                <select id="layanan_id" name="layanan_id" class="form-input" onchange="updateLampiran()">
+                    @foreach($layanans as $layanan)
+                        <option value="{{ $layanan->id }}">{{ $layanan->nama_layanan }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label for="unit_kerja" class="field-label">Unit Kerja Tujuan</label>
+                <select id="unit_kerja" name="unit_kerja" class="form-input">
+                    <option value="">Pilih Unit Kerja</option>
+                    <option value="Sub bagian TU">Sub bagian TU</option>
+                    <option value="Penma">Penma</option>
+                    <option value="PAIS">PAIS</option>
+                    <option value="PdPontren">PdPontren</option>
+                    <option value="BIMAS Islam">BIMAS Islam</option>
+                    <option value="Garazawa">GaraZawa</option>
+                    <option value="Garakristen">GaraKristen</option>
+                    <option value="Garakatolik">Gara Katolik</option>
+                    <option value="Garabudha">GaraBudha</option>
+                    <option value="PLHUT">PLHUT</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="deskripsi" class="field-label">Deskripsi Permohonan</label>
+                <textarea id="deskripsi" name="deskripsi" rows="4" class="form-input" placeholder="Jelaskan kebutuhan atau tujuan permohonan Anda"></textarea>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h3 class="mb-3 text-base font-semibold text-slate-900">Lampiran Persyaratan</h3>
+                <div id="lampiran-container" class="space-y-3">
+                    @if($layanans->isNotEmpty() && $layanans->first()->persyaratan->isNotEmpty())
+                        @foreach($layanans->first()->persyaratan as $index => $persyaratan)
+                            <div>
+                                <label for="lampiran_{{ $index }}" class="field-label">{{ $persyaratan->nama_persyaratan }}</label>
+                                <input type="file" id="lampiran_{{ $index }}" name="lampiran[{{ $index }}]" class="mt-1 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm transition duration-200 file:mr-4 file:rounded-md file:border-0 file:bg-emerald-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
                             </div>
-                        </div>
-                        <button type="submit" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg">
-                            Ajukan Permohonan
-                        </button>
-                    </form>
+                        @endforeach
+                    @endif
                 </div>
             </div>
-        </div>
+
+            <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+                <a href="{{ route('guest.permohonan.biodata') }}" class="secondary-btn w-full sm:w-auto">Kembali</a>
+                <button type="submit" class="primary-btn w-full sm:w-auto sm:ml-auto">
+                    Ajukan Permohonan
+                </button>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -72,17 +80,15 @@
             if (persyaratanData[layananId]) {
                 persyaratanData[layananId].forEach((persyaratan, index) => {
                     const div = document.createElement('div');
-                    div.className = 'mb-2';
                     div.innerHTML = `
-                        <label for="lampiran_${index}" class="block text-sm font-medium text-gray-700">${persyaratan.nama_persyaratan}</label>
-                        <input type="file" id="lampiran_${index}" name="lampiran[${index}]" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" />
+                        <label for="lampiran_${index}" class="field-label">${persyaratan.nama_persyaratan}</label>
+                        <input type="file" id="lampiran_${index}" name="lampiran[${index}]" class="mt-1 block w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm transition duration-200 file:mr-4 file:rounded-md file:border-0 file:bg-emerald-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
                     `;
                     container.appendChild(div);
                 });
             }
         }
 
-        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateLampiran();
         });
