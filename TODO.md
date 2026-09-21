@@ -1,0 +1,6 @@
+- [x] Update StatisticsController to calculate statistics in the index method and pass to view
+- [x] Update statistics/index.blade.php to use passed data instead of direct model queries
+- [x] Remove role middleware from statistics route to allow all authenticated users access
+- [x] Remove daily and weekly chart options from StatisticsController
+- [x] Implement automatic chart type selection based on available data
+- [x] Test that statistics display correctly for both admin and petugas roles
