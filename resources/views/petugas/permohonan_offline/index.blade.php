@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold text-slate-900">Permohonan Offline</h2>
+        <h2 class="text-xl font-semibold text-slate-900">Permohonan Langsung</h2>
     </x-slot>
 
     <div class="space-y-4 py-2">

@@ -139,6 +139,35 @@ class Permohonan extends Model
         return $this->layanan->seksi->nama_seksi ?? '-';
     }
 
+    /**
+     * Posisi permohonan saat ini, untuk ditampilkan di kolom "Sedang
+     * Ditangani" / "Sedang di Seksi" (detail, kartu daftar, lacak tiket).
+     * Sebelumnya view memanggil $permohonan->lokasi_saat_ini padahal
+     * accessor-nya tidak pernah ada, jadi kolom itu selalu tampil kosong.
+     *
+     * - Ada seksi aktif (didisposisikan / diproses_seksi) -> nama seksinya.
+     * - Menunggu pemohon melengkapi berkas (dikembalikan)  -> Pemohon.
+     * - Status final (selesai / ditolak / dibatalkan)      -> "-".
+     * - Selain itu (diajukan, verifikasi, selesai_seksi,
+     *   verifikasi_akhir, status lama)                     -> PTSP.
+     */
+    public function getLokasiSaatIniAttribute(): string
+    {
+        if ($this->current_seksi_id && $this->currentSeksi) {
+            return $this->currentSeksi->nama_seksi;
+        }
+
+        if (in_array($this->status, self::STATUS_FINAL, true)) {
+            return '-';
+        }
+
+        if ($this->status === 'dikembalikan') {
+            return 'Pemohon (melengkapi berkas)';
+        }
+
+        return 'PTSP';
+    }
+
     public function lampiranPermohonan(): HasMany
     {
         return $this->hasMany(LampiranPermohonan::class, 'permohonan_id');

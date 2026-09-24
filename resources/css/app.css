@@ -8,7 +8,9 @@
     }
 
     body {
-        @apply bg-slate-100 text-slate-800 antialiased;
+        @apply text-slate-800 antialiased;
+        background: linear-gradient(180deg, #f0fdf6 0%, #f8fafc 340px, #f1f5f9 100%);
+        background-attachment: fixed;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -34,11 +36,17 @@
 
 @layer components {
     .soft-card {
-        @apply rounded-lg border border-slate-200 bg-white shadow-sm;
+        @apply rounded-xl border border-slate-200/70 bg-white shadow-md shadow-slate-200/60;
+    }
+
+    /* Wadah untuk toolbar cari/filter di atas tabel — supaya nggak terasa
+       'mengambang' lepas dari konten di bawahnya. */
+    .filter-toolbar {
+        @apply soft-card p-4 sm:p-5;
     }
 
     .primary-btn {
-        @apply inline-flex items-center justify-center rounded-lg bg-emerald-600 px-3.5 py-2 text-[13px] font-semibold text-white shadow-sm transition-all duration-150 hover:bg-emerald-700 active:scale-[.97] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+        @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-b from-emerald-500 to-emerald-600 px-3.5 py-2 text-[13px] font-semibold text-white shadow-md shadow-emerald-600/20 transition-all duration-150 hover:from-emerald-600 hover:to-emerald-700 active:scale-[.97] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
     }
 
     .secondary-btn {
@@ -49,13 +57,39 @@
         @apply inline-flex items-center justify-center rounded-lg bg-rose-600 px-3.5 py-2 text-[13px] font-semibold text-white shadow-sm transition-all duration-150 hover:bg-rose-700 active:scale-[.97] focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2;
     }
 
+    /* Menu navbar publik: huruf kapital, hitam tegas (slate-950). */
     .nav-link {
-        @apply inline-flex items-center rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 transition-colors duration-150 hover:bg-emerald-50 hover:text-emerald-700;
+        @apply relative inline-flex items-center whitespace-nowrap rounded-lg px-3 py-2 text-[12.5px] font-semibold uppercase tracking-wide text-slate-950 transition-colors duration-150 hover:bg-emerald-50 hover:text-emerald-700;
+    }
+
+    /* Penanda halaman aktif: garis bawah hijau tipis. */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: 0.125rem;
+        height: 2px;
+        border-radius: 9999px;
+        background-color: theme('colors.emerald.600');
+        transform: scaleX(0);
+        transition: transform 150ms ease;
+    }
+    .nav-link.is-active::after {
+        transform: scaleX(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .nav-link::after { transition: none; }
+    }
+
+    /* Tombol aksi di kanan navbar publik (Masuk / Dashboard) */
+    .nav-cta {
+        @apply items-center justify-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/25 transition-all duration-150 hover:from-emerald-700 hover:to-teal-600 active:scale-[.97] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
     }
 
     /* Kartu ringkasan (dashboard, statistik) yang boleh terasa "hidup" saat disentuh */
     .stat-card {
-        @apply rounded-xl border border-slate-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md;
+        @apply rounded-xl border border-slate-200/70 bg-white p-4 shadow-md shadow-slate-200/60 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg;
     }
 
     /* Banner notifikasi (flash success/error) muncul dengan animasi halus,
@@ -74,12 +108,12 @@
     /* Tombol aksi ikon-saja (baris Lihat/Edit/Hapus di list admin & petugas).
        Warna hover menyesuaikan lewat class tambahan: icon-action-view/edit/danger. */
     .icon-action {
-        @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition duration-150;
+        @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-500 shadow-sm transition duration-150;
     }
     .icon-action svg { @apply h-[18px] w-[18px]; }
-    .icon-action-view   { @apply hover:bg-sky-50 hover:text-sky-700; }
-    .icon-action-edit   { @apply hover:bg-emerald-50 hover:text-emerald-700; }
-    .icon-action-danger { @apply hover:bg-rose-50 hover:text-rose-600; }
+    .icon-action-view   { @apply hover:bg-sky-600 hover:text-white hover:shadow-md hover:shadow-sky-600/30; }
+    .icon-action-edit   { @apply hover:bg-emerald-600 hover:text-white hover:shadow-md hover:shadow-emerald-600/30; }
+    .icon-action-danger { @apply hover:bg-rose-600 hover:text-white hover:shadow-md hover:shadow-rose-600/30; }
 
     /* Tanda syarat wajib */
     .required-mark {
@@ -122,22 +156,38 @@
 
     .workspace-page table thead,
     .internal-workspace table thead {
-        @apply bg-slate-50;
+        background: linear-gradient(180deg, #ecfdf5 0%, #f0fdf6 100%);
     }
 
     .workspace-page table th,
     .internal-workspace table th {
-        @apply border-y border-slate-200 px-3.5 py-2 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500;
+        @apply border-y border-emerald-100 px-3.5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-emerald-800/80;
     }
 
     .workspace-page table td,
     .internal-workspace table td {
-        @apply relative border-b border-slate-100 px-3.5 py-2.5 text-[13px] text-slate-600;
+        @apply relative border-b border-slate-100 px-3.5 py-3 text-[13px] text-slate-600;
+    }
+
+    /* Baris genap diberi warna berbeda (zebra), dengan tint hijau brand tipis
+       supaya kelihatan jelas tapi tetap lebih pucat dari warna hover. */
+    .workspace-page table tbody tr:nth-child(even),
+    .internal-workspace table tbody tr:nth-child(even) {
+        @apply bg-emerald-50/50;
     }
 
     .workspace-page table tbody tr,
     .internal-workspace table tbody tr {
-        @apply transition-colors duration-150 hover:bg-emerald-50/40;
+        @apply transition-colors duration-150 hover:bg-emerald-100/70;
+    }
+
+    /* Baris yang bisa diklik (menuju halaman detail) diberi kursor pointer;
+       elemen aksi di dalamnya (link/tombol) memanggil event.stopPropagation()
+       lewat atribut onclick supaya klik pada ikon aksi tidak ikut memicu
+       navigasi baris. */
+    .workspace-page table tbody tr.row-clickable,
+    .internal-workspace table tbody tr.row-clickable {
+        @apply cursor-pointer;
     }
 
     /* Garis aksen hijau tipis di kiri baris saat hover — muncul lewat animasi

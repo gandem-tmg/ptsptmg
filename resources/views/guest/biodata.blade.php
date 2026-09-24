@@ -55,7 +55,7 @@
                 @error('ktp')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
-                <p class="mt-2 text-xs text-slate-500">Format: JPG, PNG, atau PDF. Maksimal 2MB.</p>
+                <p class="mt-2 text-xs text-slate-600">Format: JPG, PNG, atau PDF. Maksimal 2MB.</p>
             </div>
 
             <div class="pt-2">

@@ -17,7 +17,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-50">
+    <body class="font-sans antialiased">
         {{-- flex flex-col + min-h-[100dvh]: wrapper ini jadi "sticky footer"
              layout. bottom-nav (item terakhir) otomatis nempel di bawah
              viewport lewat position:sticky, bukan position:fixed — pola ini
@@ -33,7 +33,7 @@
 
             <div class="flex flex-1 flex-col transition-all duration-200" :class="sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-72'">
                 <!-- Topbar -->
-                <header class="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-slate-200 bg-white/90 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+                <header class="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-3 border-b border-emerald-100 bg-white/90 px-4 backdrop-blur-md sm:px-6 lg:px-8">
                     <button @click="sidebarOpen = true" class="-ml-2 shrink-0 rounded-lg p-2 text-slate-600 hover:bg-slate-100 lg:hidden">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
                     </button>

@@ -82,7 +82,7 @@ class LayananController extends Controller
 
     public function show(Layanan $layanan)
     {
-        $layanan->load('seksi', 'persyaratan');
+        $layanan->load('seksi', 'persyaratan', 'perubahanLog.user');
         $prefix = request()->route()->getPrefix();
         if (str_contains($prefix, 'petugas')) {
             return view('petugas.layanan.show', compact('layanan'));

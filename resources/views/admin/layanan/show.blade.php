@@ -39,6 +39,22 @@
                     @else
                         <p>Tidak ada persyaratan yang terkait.</p>
                     @endif
+
+                    <h3 class="text-lg font-medium text-gray-900 mb-4 mt-8">Riwayat Perubahan oleh Petugas Seksi</h3>
+                    @if($layanan->perubahanLog->count() > 0)
+                        <ul class="space-y-3">
+                            @foreach($layanan->perubahanLog as $log)
+                            <li class="border-l-2 border-emerald-200 pl-3 text-sm">
+                                <p class="text-slate-800">{{ $log->ringkasan }}</p>
+                                <p class="text-xs text-slate-400">
+                                    {{ $log->user->name ?? 'Pengguna terhapus' }} &middot; {{ $log->created_at->format('d M Y H:i') }}
+                                </p>
+                            </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-sm text-slate-500">Belum ada perubahan yang tercatat dari petugas seksi.</p>
+                    @endif
                 </div>
             </div>
         </div>

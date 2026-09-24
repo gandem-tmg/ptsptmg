@@ -17,7 +17,7 @@
                             <svg class="h-4 w-4 shrink-0 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                             {{ $permohonan->nama_layanan_label }}
                         </span>
-                        <span class="inline-flex items-center gap-1.5 text-slate-500">
+                        <span class="inline-flex items-center gap-1.5 text-slate-600">
                             <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             {{ $permohonan->no_tiket }}
                         </span>
@@ -27,7 +27,7 @@
         </div>
 
         @if($pertanyaans->isEmpty())
-            <div class="soft-card mt-5 p-5 text-center text-sm text-slate-500">
+            <div class="soft-card mt-5 p-5 text-center text-sm text-slate-600">
                 Survei belum tersedia saat ini.
             </div>
         @else
@@ -38,7 +38,7 @@
                 <button type="submit" class="primary-btn w-full py-3 text-sm">
                     Kirim Penilaian
                 </button>
-                <p class="text-center text-xs text-slate-400">Jawaban Anda tercatat anonim untuk laporan agregat & tidak memengaruhi layanan yang akan datang.</p>
+                <p class="text-center text-xs text-slate-500">Jawaban Anda tercatat anonim untuk laporan agregat & tidak memengaruhi layanan yang akan datang.</p>
             </form>
         @endif
 

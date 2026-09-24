@@ -4,7 +4,7 @@
 $url = $routePrefix ? route($routePrefix . '.permohonan.show', $permohonan) : '#';
 @endphp
 
-<div class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-emerald-300 hover:shadow-md">
+<div class="rounded-xl border border-slate-200/70 bg-white p-4 shadow-md shadow-slate-200/60 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-lg">
     <a href="{{ $url }}" class="block">
         <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">

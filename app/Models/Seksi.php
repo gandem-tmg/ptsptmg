@@ -28,9 +28,18 @@ class Seksi extends Model
         return $this->hasMany(User::class, 'seksi_id');
     }
 
+    /**
+     * Permohonan yang SEDANG ditangani seksi ini — lokasi (current_seksi_id)
+     * SAJA tidak cukup, karena permohonan yang sudah final (selesai/ditolak/
+     * dibatalkan) tetap "parkir" di current_seksi_id terakhirnya walau
+     * pekerjaannya sudah tidak berjalan lagi. Makanya status final harus
+     * dikecualikan, supaya angka "sedang ditangani" di dashboard pimpinan
+     * tidak ikut menghitung yang sudah kelar.
+     */
     public function permohonanAktif(): HasMany
     {
-        return $this->hasMany(Permohonan::class, 'current_seksi_id');
+        return $this->hasMany(Permohonan::class, 'current_seksi_id')
+            ->whereNotIn('status', Permohonan::STATUS_FINAL);
     }
 
     public function disposisi(): HasMany

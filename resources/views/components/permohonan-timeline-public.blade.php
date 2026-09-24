@@ -93,7 +93,7 @@
                 @endphp
                 <div class="flex flex-col items-center gap-1.5 px-1">
                     <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold
-                        {{ $isCurrent ? 'bg-emerald-600 text-white ring-2 ring-emerald-100' : ($isDone ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-400') }}">
+                        {{ $isCurrent ? 'bg-emerald-600 text-white ring-2 ring-emerald-100' : ($isDone ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-500') }}">
                         @if($isDone && !$isCurrent)
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                         @elseif($key === 'diproses' && $isCurrent)
@@ -102,7 +102,7 @@
                             {{ $idx + 1 }}
                         @endif
                     </span>
-                    <span class="text-center text-[11px] font-semibold leading-tight sm:text-xs {{ $isCurrent ? 'text-emerald-700' : ($isDone ? 'text-slate-700' : 'text-slate-400') }}">
+                    <span class="text-center text-[11px] font-semibold leading-tight sm:text-xs {{ $isCurrent ? 'text-emerald-700' : ($isDone ? 'text-slate-700' : 'text-slate-500') }}">
                         {{ $label }}
                     </span>
                 </div>

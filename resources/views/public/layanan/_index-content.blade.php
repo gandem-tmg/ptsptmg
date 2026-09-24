@@ -9,15 +9,16 @@
             @guest
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-center">
                 <div class="lg:col-span-3">
-                    <div class="mb-4 inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                    <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true"></span>
                         PTSP Online
                     </div>
-                    <h1 class="max-w-2xl text-3xl font-bold text-slate-900 sm:text-4xl">
-                        Layanan Terpadu Satu Pintu
-                        <span class="block text-2xl font-semibold text-slate-600 sm:text-3xl">Kementerian Agama Kabupaten Temanggung</span>
+                    <h1 class="max-w-2xl">
+                        <span class="block bg-gradient-to-r from-[#00533a] via-emerald-800 to-teal-800 bg-clip-text text-4xl font-bold leading-[1.2] tracking-tight text-transparent sm:text-5xl lg:text-6xl">Layanan Terpadu</span>
+                        <span class="mt-2 block text-2xl font-semibold text-slate-700 sm:text-3xl">Kementerian Agama Kabupaten Temanggung</span>
                     </h1>
-                    <p class="mt-3 max-w-2xl text-base text-slate-600">
-                        Apa yang ingin Anda urus hari ini? Pilih kategori sesuai kebutuhan Anda, atau langsung cari nama layanannya.
+                    <p class="mt-4 max-w-2xl text-base text-slate-600">
+                        Apa yang ingin Anda urus? Pilih kategori sesuai kebutuhan Anda, atau langsung cari nama layanannya.
                     </p>
                     <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                         <a href="#daftar-layanan" class="primary-btn text-center">Ajukan Permohonan</a>
@@ -63,7 +64,7 @@
             </div>
             @else
                 <h1 class="text-xl font-semibold text-slate-900 sm:text-2xl">Pilih Layanan</h1>
-                <p class="mt-1 text-sm text-slate-500">Pilih kategori sesuai kebutuhan, lalu pilih layanan yang ingin diajukan.</p>
+                <p class="mt-1 text-sm text-slate-600">Pilih kategori sesuai kebutuhan, lalu pilih layanan yang ingin diajukan.</p>
             @endguest
         </div>
 
@@ -84,7 +85,7 @@
                 @endif
             </form>
             @unless($isFiltering)
-            <p class="mt-3 text-xs text-slate-400">{{ $totalLayanan }} layanan tersedia, dikelompokkan dalam {{ $kategoris->count() }} kategori kebutuhan.</p>
+            <p class="mt-3 text-xs text-slate-500">{{ $totalLayanan }} layanan tersedia, dikelompokkan dalam {{ $kategoris->count() }} kategori kebutuhan.</p>
             @endunless
         </div>
 
@@ -96,7 +97,7 @@
                 <div class="flex items-center gap-3">
                     <div>
                         <p class="font-semibold text-slate-900">Tidak tahu harus pilih layanan apa?</p>
-                        <p class="text-sm text-slate-500">Bantu saya menemukan layanan — cukup pilih Anda ini siapa.</p>
+                        <p class="text-sm text-slate-600">Bantu saya menemukan layanan — cukup pilih Anda ini siapa.</p>
                     </div>
                 </div>
                 <svg class="h-5 w-5 shrink-0 text-emerald-600 transition-transform duration-200" :class="wizardOpen ? 'rotate-180' : ''"
@@ -163,7 +164,7 @@
                 </div>
             </div>
             @empty
-            <div class="soft-card p-6 text-center text-slate-500">
+            <div class="soft-card p-6 text-center text-slate-600">
                 Tidak ada layanan yang cocok. Coba kata kunci lain, atau
                 <a href="{{ route('layanan.index') }}" class="font-medium text-emerald-700 hover:underline">lihat semua layanan</a>.
             </div>
@@ -191,11 +192,11 @@
                         <div class="flex min-w-0 items-start gap-3">
                             <div class="min-w-0">
                                 <h3 class="font-semibold text-slate-900">{{ $kategori->label }}</h3>
-                                <p class="mt-1 text-sm text-slate-500">{{ $kategori->deskripsi }}</p>
+                                <p class="mt-1 text-sm text-slate-600">{{ $kategori->deskripsi }}</p>
                                 <p class="mt-1.5 text-xs font-medium text-emerald-700">{{ $kategori->layananList->count() }} layanan</p>
                             </div>
                         </div>
-                        <svg class="h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200"
+                        <svg class="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-200"
                              :class="openKategori === '{{ $kategori->slug }}' ? 'rotate-180' : ''"
                              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -211,7 +212,7 @@
                          x-transition:leave-end="opacity-0 -translate-y-2"
                          class="border-t border-slate-100 bg-slate-50/50 p-5">
                         @if($kategori->layananList->isEmpty())
-                            <p class="text-sm text-slate-400">Belum ada layanan terdaftar di kategori ini.</p>
+                            <p class="text-sm text-slate-500">Belum ada layanan terdaftar di kategori ini.</p>
                         @else
                             @if(count($kategori->subkategori))
                                 {{-- Kategori dengan subkategori (mis. Pendidikan) -> dikelompokkan lagi jadi tab kecil --}}
@@ -219,7 +220,7 @@
                                     @php $subList = $kategori->layananList->where('subkategori', $subSlug)->values(); @endphp
                                     @if($subList->isNotEmpty())
                                     <div class="mb-5 last:mb-0">
-                                        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ $subLabel }}</p>
+                                        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">{{ $subLabel }}</p>
                                         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                                             @foreach($subList as $layanan)
                                                 <x-layanan-mini-card :layanan="$layanan" />
@@ -256,7 +257,7 @@
             <div class="flex items-center gap-3">
                 <div>
                     <p class="font-semibold text-slate-900">Ada keluhan atau pengaduan?</p>
-                    <p class="text-sm text-slate-500">Sampaikan pengaduan terkait pelayanan publik Kemenag Kab. Temanggung di sini.</p>
+                    <p class="text-sm text-slate-600">Sampaikan pengaduan terkait pelayanan publik Kemenag Kab. Temanggung di sini.</p>
                 </div>
             </div>
             <a href="{{ route('layanan.show', $layananPengaduan) }}" class="secondary-btn shrink-0 text-center">Sampaikan Pengaduan</a>

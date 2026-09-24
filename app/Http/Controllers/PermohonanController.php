@@ -17,6 +17,14 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PermohonanController extends Controller
 {
+    /**
+     * Jumlah kartu yang ditampilkan di "Permohonan Terbaru" (feed cepat untuk
+     * petugas PTSP). Sengaja dibatasi & TIDAK dipaginasi — kalau butuh
+     * menyisir semua data, arahkan ke "Daftar Permohonan" (daftarPetugas())
+     * yang tabelnya memang dirancang untuk itu (lengkap dengan paginasi).
+     */
+    private const PERMOHONAN_TERBARU_LIMIT = 9;
+
     public function index(Request $request)
     {
         $user = auth()->user();
@@ -26,41 +34,69 @@ class PermohonanController extends Controller
             $query = Permohonan::where('user_id', $user->id)->with(['layanan', 'surveiRespon']);
             $this->applySearch($query, $search, withUser: false);
             $this->applyFilters($query, $request);
-            $permohonans = $query->paginate(20);
+            $permohonans = $query->latest('tanggal_pengajuan')->paginate(20);
             return view('pemohon.permohonan.index', compact('permohonans'));
         } elseif ($user->role === 'admin') {
             $query = Permohonan::with('layanan', 'user', 'currentSeksi');
             $this->applySearch($query, $search, withUser: true);
             $this->applyFilters($query, $request);
-            $permohonans = $query->paginate(20);
+            $permohonans = $query->latest('tanggal_pengajuan')->paginate(20);
             $seksis = Seksi::orderBy('nama_seksi')->get();
             return view('admin.permohonan.index', compact('permohonans', 'seksis'));
         } elseif ($user->role === 'petugas') {
-            // PTSP mengawasi semua permohonan lintas seksi.
+            // "Permohonan Terbaru" — feed cepat, sengaja dibatasi ke N
+            // permohonan paling baru saja (bukan daftar lengkap) supaya beda
+            // jelas dengan "Daftar Permohonan" (versi tabel semua data).
+            $limit = self::PERMOHONAN_TERBARU_LIMIT;
             $query = Permohonan::with('layanan', 'user', 'currentSeksi');
             $this->applySearch($query, $search, withUser: true);
             $this->applyFilters($query, $request);
-            $permohonans = $query->paginate(20);
+            $totalKeseluruhan = (clone $query)->count();
+            $permohonans = $query->latest('tanggal_pengajuan')->take($limit)->get();
             $seksis = Seksi::orderBy('nama_seksi')->get();
-            return view('petugas.permohonan.index', compact('permohonans', 'seksis'));
+            return view('petugas.permohonan.index', compact('permohonans', 'seksis', 'limit', 'totalKeseluruhan'));
         } elseif ($user->role === 'petugas_seksi') {
             // Hanya permohonan yang sedang berada di seksi milik petugas ini.
             $query = Permohonan::where('current_seksi_id', $user->seksi_id)->with('layanan', 'user');
             $this->applySearch($query, $search, withUser: true);
             $this->applyFilters($query, $request);
-            $permohonans = $query->paginate(20);
+            $permohonans = $query->latest('tanggal_pengajuan')->paginate(20);
             return view('petugas_seksi.permohonan.index', compact('permohonans'));
         } elseif ($user->role === 'pimpinan') {
             // Read-only, lintas seksi, untuk monitoring.
             $query = Permohonan::with('layanan', 'user', 'currentSeksi');
             $this->applySearch($query, $search, withUser: true);
             $this->applyFilters($query, $request);
-            $permohonans = $query->paginate(20);
+            $permohonans = $query->latest('tanggal_pengajuan')->paginate(20);
             $seksis = Seksi::orderBy('nama_seksi')->get();
             return view('pimpinan.permohonan.index', compact('permohonans', 'seksis'));
         }
 
         abort(403);
+    }
+
+    /**
+     * "Daftar Permohonan" untuk petugas PTSP — versi tabel dari data yang
+     * sama dengan index() (semua permohonan lintas seksi, dengan search &
+     * filter yang sama), tapi terpisah dari "Permohonan Terbaru" (card view)
+     * supaya petugas punya satu tampilan ringkas untuk antrean kerja dan satu
+     * tampilan tabel untuk menyisir/mencari seluruh data.
+     */
+    public function daftarPetugas(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->role !== 'petugas') {
+            abort(403);
+        }
+
+        $search = $request->input('search');
+        $query = Permohonan::with('layanan', 'user', 'currentSeksi');
+        $this->applySearch($query, $search, withUser: true);
+        $this->applyFilters($query, $request);
+        $permohonans = $query->latest('tanggal_pengajuan')->paginate(20);
+        $seksis = Seksi::orderBy('nama_seksi')->get();
+
+        return view('petugas.permohonan.daftar', compact('permohonans', 'seksis'));
     }
 
     /**

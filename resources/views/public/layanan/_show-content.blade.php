@@ -6,7 +6,7 @@
     </a>
 
     @if($layanan->kategori)
-    <nav class="mt-3 flex items-center gap-1.5 text-xs text-slate-400">
+    <nav class="mt-3 flex items-center gap-1.5 text-xs text-slate-500">
         <a href="{{ route('layanan.index') }}" class="hover:text-emerald-700">Layanan</a>
         <span>/</span>
         <a href="{{ route('layanan.index', ['kategori' => $layanan->kategori]) }}" class="hover:text-emerald-700">{{ $layanan->kategori_label }}</a>
@@ -38,7 +38,7 @@
 
             {{-- Seksi/unit tetap ditampilkan untuk transparansi, tapi hanya sebagai
                  info — bukan elemen navigasi (lihat kesepakatan desain arsitektur). --}}
-            <div class="mt-3 flex items-center gap-2 text-sm text-slate-500">
+            <div class="mt-3 flex items-center gap-2 text-sm text-slate-600">
                 <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-3.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-4-4" /></svg>
                 Ditangani oleh <span class="font-medium text-slate-700">{{ $layanan->seksi->nama_seksi ?? '-' }}</span>
             </div>
@@ -68,10 +68,10 @@
                         <span class="flex items-center gap-2 text-base font-semibold text-slate-900">
                             Persyaratan yang perlu disiapkan
                             @if($layanan->persyaratan->where('wajib', true)->count() > 0)
-                            <span class="text-xs font-normal text-slate-400"><span class="required-mark">*</span> wajib</span>
+                            <span class="text-xs font-normal text-slate-500"><span class="required-mark">*</span> wajib</span>
                             @endif
                         </span>
-                        <svg class="h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200" :class="open.persyaratan ? 'rotate-180' : ''"
+                        <svg class="h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200" :class="open.persyaratan ? 'rotate-180' : ''"
                              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     </button>
                     <div x-show="open.persyaratan" x-cloak
@@ -91,7 +91,7 @@
                             @endforeach
                         </ul>
                         @else
-                        <p class="text-sm text-slate-500">Belum ada data persyaratan untuk layanan ini.</p>
+                        <p class="text-sm text-slate-600">Belum ada data persyaratan untuk layanan ini.</p>
                         @endif
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                     <button type="button" @click="open.{{ $key }} = !open.{{ $key }}"
                             class="flex w-full items-center justify-between gap-3 bg-slate-50 px-4 py-3 text-left transition hover:bg-slate-100">
                         <span class="text-base font-semibold text-slate-900">{{ $poin['label'] }}</span>
-                        <svg class="h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200" :class="open.{{ $key }} ? 'rotate-180' : ''"
+                        <svg class="h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200" :class="open.{{ $key }} ? 'rotate-180' : ''"
                              fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     </button>
                     <div x-show="open.{{ $key }}" x-cloak
@@ -120,7 +120,7 @@
                         @if($poin['isi'])
                             {!! nl2br(e($poin['isi'])) !!}
                         @else
-                            <p class="text-slate-400">Data belum tersedia untuk poin ini.</p>
+                            <p class="text-slate-500">Data belum tersedia untuk poin ini.</p>
                         @endif
                     </div>
                 </div>
@@ -131,7 +131,7 @@
         <!-- CTA sidebar -->
         <div class="lg:col-span-1">
             <div class="soft-card sticky top-6 p-6">
-                <p class="text-sm text-slate-500">Siap mengajukan?</p>
+                <p class="text-sm text-slate-600">Siap mengajukan?</p>
                 <p class="mt-1 text-sm text-slate-600">Masuk diperlukan supaya Anda bisa memantau status pengajuan kapan saja dari akun Anda.</p>
                 <a href="{{ route('layanan.ajukan', $layanan) }}" class="primary-btn mt-4 block text-center">
                     Ajukan Sekarang
@@ -139,11 +139,11 @@
 
                 <dl class="mt-6 space-y-3 border-t border-slate-100 pt-5 text-sm">
                     <div class="flex items-center justify-between">
-                        <dt class="text-slate-500">Jumlah persyaratan</dt>
+                        <dt class="text-slate-600">Jumlah persyaratan</dt>
                         <dd class="font-medium text-slate-900">{{ $layanan->persyaratan->count() }}</dd>
                     </div>
                     <div class="flex items-center justify-between">
-                        <dt class="text-slate-500">Unit terkait</dt>
+                        <dt class="text-slate-600">Unit terkait</dt>
                         <dd class="text-right font-medium text-slate-900">{{ $layanan->seksi->nama_seksi ?? '-' }}</dd>
                     </div>
                 </dl>

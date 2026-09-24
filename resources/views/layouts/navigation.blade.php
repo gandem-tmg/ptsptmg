@@ -1,14 +1,14 @@
 <!-- Sidebar desktop, selalu tampil, bisa dilipat jadi ikon saja -->
 <aside :class="sidebarCollapsed ? 'lg:w-20' : 'lg:w-72'"
-       class="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:flex lg:flex-col lg:border-r lg:border-slate-200 lg:bg-white lg:transition-all lg:duration-200">
+       class="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:flex lg:flex-col lg:border-r lg:border-slate-200 lg:bg-white lg:shadow-[4px_0_24px_-8px_rgba(16,185,129,0.12)] lg:transition-all lg:duration-200">
     <div :class="{ 'sidebar-is-collapsed': sidebarCollapsed }" class="flex h-full flex-col">
 
-        <div class="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-slate-100 px-4">
+        <div class="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-emerald-100 bg-gradient-to-r from-emerald-50/60 to-white px-4">
             <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-3">
-                <img src="{{ asset('logo.png') }}" alt="Logo PTSP" class="h-9 w-9 shrink-0 rounded-lg object-cover">
+                <img src="{{ asset('logo.png') }}" alt="Logo PTSP" class="h-9 w-9 shrink-0 rounded-lg object-cover shadow-sm ring-2 ring-white">
                 <span class="sidebar-label truncate font-semibold text-slate-900">PTSP Online</span>
             </a>
-            <button @click="sidebarCollapsed = !sidebarCollapsed" class="shrink-0 rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600">
+            <button @click="sidebarCollapsed = !sidebarCollapsed" class="shrink-0 rounded-lg p-1.5 text-slate-400 hover:bg-white/70 hover:text-emerald-600">
                 <svg x-show="!sidebarCollapsed" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" /></svg>
                 <svg x-show="sidebarCollapsed" x-cloak class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" /></svg>
             </button>
@@ -20,9 +20,9 @@
 
         <!-- Profile + Logout: SELALU langsung terlihat, bukan disembunyikan di dropdown -->
         <div class="border-t border-slate-100 p-3">
-            <div class="sidebar-footer-row flex items-center gap-2 rounded-xl p-1.5 hover:bg-slate-50">
+            <div class="sidebar-footer-row flex items-center gap-2 rounded-xl p-1.5 hover:bg-emerald-50">
                 <a href="{{ route('profile.edit') }}" title="{{ Auth::user()->name }}" class="flex min-w-0 flex-1 items-center gap-3 rounded-lg p-1">
-                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+                    <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-sm font-bold text-white shadow-sm ring-2 ring-white">
                         {{ Str::upper(Str::substr(Auth::user()->name, 0, 1)) }}
                     </span>
                     <span class="sidebar-label min-w-0 flex-1 text-left">

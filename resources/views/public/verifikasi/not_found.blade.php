@@ -5,7 +5,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </div>
             <h1 class="text-xl font-bold text-slate-900 mb-1">Dokumen Tidak Ditemukan</h1>
-            <p class="text-sm text-slate-500">
+            <p class="text-sm text-slate-600">
                 Kode verifikasi ini tidak cocok dengan dokumen resmi manapun di sistem kami, atau dokumen belum ditandatangani. Kalau Anda yakin dokumen ini asli, hubungi Kantor Kementerian Agama Kabupaten Temanggung untuk konfirmasi.
             </p>
         </div>

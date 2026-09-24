@@ -10,8 +10,8 @@
         ],
         'petugas' => [
             ['route' => 'dashboard', 'active' => 'dashboard', 'label' => 'Beranda', 'icon' => 'home'],
-            ['route' => 'petugas.permohonan.index', 'active' => 'petugas.permohonan.index', 'label' => 'Permohonan', 'icon' => 'inbox'],
-            ['route' => 'petugas.permohonan.offline.index', 'active' => 'petugas.permohonan.offline.*', 'label' => 'Offline', 'icon' => 'plus'],
+            ['route' => 'petugas.permohonan.index', 'active' => 'petugas.permohonan.index', 'label' => 'Terbaru', 'icon' => 'inbox'],
+            ['route' => 'petugas.permohonan.offline.index', 'active' => 'petugas.permohonan.offline.*', 'label' => 'Langsung', 'icon' => 'plus'],
         ],
         'petugas_seksi' => [
             ['route' => 'dashboard', 'active' => 'dashboard', 'label' => 'Beranda', 'icon' => 'home'],

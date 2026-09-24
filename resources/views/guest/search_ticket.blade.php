@@ -6,7 +6,7 @@
                 Status Permohonan
             </span>
             <h1 class="mt-3 text-2xl font-bold text-slate-900 sm:text-[28px]">Cek Status Permohonan Anda</h1>
-            <p class="mt-2 text-sm leading-relaxed text-slate-500">Masukkan nomor tiket yang tertera pada bukti pengajuan Anda.</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">Masukkan nomor tiket yang tertera pada bukti pengajuan Anda.</p>
         </div>
 
         <div class="w-full overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-xl shadow-emerald-900/5">
@@ -22,7 +22,7 @@
                     @csrf
                     <label for="no_tiket" class="mb-2 block text-sm font-medium text-slate-700">Nomor Tiket</label>
                     <div class="relative">
-                        <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </span>
                         <input type="text" id="no_tiket" name="no_tiket" value="{{ old('no_tiket') }}" placeholder="Contoh: 250912-014" required
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <p class="mt-6 max-w-sm text-center text-sm leading-relaxed text-slate-500">
+        <p class="mt-6 max-w-sm text-center text-sm leading-relaxed text-slate-600">
             Sudah punya akun? <a href="{{ route('login') }}" class="font-semibold text-emerald-700 hover:text-emerald-800">Masuk</a> untuk melihat riwayat semua permohonan Anda sekaligus.
         </p>
     </div>

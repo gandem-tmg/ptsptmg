@@ -14,7 +14,7 @@
                         Masukan Anda membantu kami meningkatkan kualitas pelayanan publik. Survei ini dapat diisi
                         kapan saja, baik oleh masyarakat yang sudah maupun belum pernah menggunakan layanan kami.
                     </p>
-                    <p class="mt-3 text-xs text-slate-400">Mengacu pada Peraturan Menteri PANRB Nomor 14 Tahun 2017 tentang Pedoman Survei Kepuasan Masyarakat.</p>
+                    <p class="mt-3 text-xs text-slate-500">Mengacu pada Peraturan Menteri PANRB Nomor 14 Tahun 2017 tentang Pedoman Survei Kepuasan Masyarakat.</p>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
         @endif
 
         @if($pertanyaans->isEmpty())
-            <div class="soft-card mt-5 p-5 text-center text-sm text-slate-500">
+            <div class="soft-card mt-5 p-5 text-center text-sm text-slate-600">
                 Survei belum tersedia saat ini. Silakan coba lagi nanti.
             </div>
         @else
@@ -39,7 +39,7 @@
                     @error('nama_pengisi') <p class="mt-1 text-xs text-rose-600">{{ $message }}</p> @enderror
 
                     <div class="mt-4 border-t border-slate-100 pt-4">
-                        <p class="text-xs font-medium text-slate-500">Data diri singkat berikut ini opsional, membantu kami membaca hasil survei lebih akurat per kelompok masyarakat.</p>
+                        <p class="text-xs font-medium text-slate-600">Data diri singkat berikut ini opsional, membantu kami membaca hasil survei lebih akurat per kelompok masyarakat.</p>
                         <div class="mt-3 grid grid-cols-2 gap-3">
                             <div>
                                 <label class="mb-1 block text-xs font-medium text-slate-600">Jenis Kelamin</label>

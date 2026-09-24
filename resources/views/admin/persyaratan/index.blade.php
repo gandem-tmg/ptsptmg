@@ -13,7 +13,7 @@
             <div class="flash-banner rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{{ session('success') }}</div>
         @endif
 
-        <form method="GET" action="{{ route('admin.persyaratan.index') }}">
+        <form method="GET" action="{{ route('admin.persyaratan.index') }}" class="filter-toolbar">
             <div class="flex gap-2">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari persyaratan..."
                        class="flex-1 rounded-lg border-slate-300 px-3 py-2 text-[13px] transition-colors duration-150 focus:border-emerald-500 focus:ring-emerald-200">
@@ -21,23 +21,29 @@
             </div>
         </form>
 
-        @if($persyaratans->isEmpty())
-            <div class="soft-card p-10 text-center text-sm text-slate-500">Belum ada persyaratan.</div>
-        @else
-            <div class="space-y-3">
+        <x-data-table :empty="$persyaratans->isEmpty()" empty-message="Belum ada persyaratan.">
+            <thead>
+                <tr>
+                    <th class="w-10">No</th>
+                    <th>Nama Persyaratan</th>
+                    <th>Layanan</th>
+                    <th>Sifat</th>
+                    <th class="text-right">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach($persyaratans as $persyaratan)
-                <div class="soft-card p-4 sm:p-5">
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                        <div class="min-w-0 flex-1">
-                            <p class="text-sm font-medium leading-relaxed text-slate-900">{{ $persyaratan->nama_persyaratan }}</p>
-                            <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                                <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">{{ $persyaratan->layanan->nama_layanan ?? '-' }}</span>
-                                <span class="rounded-full px-2.5 py-1 font-medium {{ $persyaratan->wajib ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700' }}">
-                                    {{ $persyaratan->wajib ? 'Wajib' : 'Opsional' }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="flex shrink-0 items-center gap-1">
+                <tr class="row-clickable" onclick="location.href='{{ route('admin.persyaratan.edit', $persyaratan) }}'">
+                    <td class="text-slate-400">{{ $persyaratans->firstItem() + $loop->index }}</td>
+                    <td class="max-w-md">{{ $persyaratan->nama_persyaratan }}</td>
+                    <td>{{ $persyaratan->layanan->nama_layanan ?? '-' }}</td>
+                    <td>
+                        <span class="rounded-full px-2.5 py-1 text-xs font-medium {{ $persyaratan->wajib ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700' }}">
+                            {{ $persyaratan->wajib ? 'Wajib' : 'Opsional' }}
+                        </span>
+                    </td>
+                    <td class="text-right" onclick="event.stopPropagation()">
+                        <div class="flex items-center justify-end gap-1">
                             <a href="{{ route('admin.persyaratan.edit', $persyaratan) }}"
                                title="Edit"
                                class="icon-action icon-action-edit">
@@ -51,14 +57,14 @@
                                 </button>
                             </form>
                         </div>
-                    </div>
-                </div>
+                    </td>
+                </tr>
                 @endforeach
-            </div>
+            </tbody>
+        </x-data-table>
 
-            <div class="pt-2">
-                {{ $persyaratans->appends(request()->query())->links() }}
-            </div>
-        @endif
+        <div class="pt-2">
+            {{ $persyaratans->appends(request()->query())->links() }}
+        </div>
     </div>
 </x-app-layout>
