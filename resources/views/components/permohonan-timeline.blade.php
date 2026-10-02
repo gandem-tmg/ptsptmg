@@ -45,6 +45,17 @@
         $currentIndex = array_search($currentKey, $stepKeys);
         $maxIndex = max($maxIndex, $currentIndex);
     }
+
+    // Precompute per-step state sekali di sini, dipakai untuk lingkaran maupun garis penghubung di markup.
+    $stepStates = [];
+    foreach ($stepKeys as $idx => $key) {
+        $isDone = $idx < $maxIndex || ($idx === $maxIndex && $isTerminalIssue);
+        $stepStates[] = [
+            'label' => $steps[$key],
+            'done' => $isDone,
+            'current' => !$isTerminalIssue && $idx === $currentIndex,
+        ];
+    }
 @endphp
 
 @if($isTerminalIssue)
@@ -72,28 +83,48 @@
     </div>
 @endif
 
-<!-- Grid responsif: 3 kolom di HP (jadi 2 baris, tanpa scroll), 6 kolom di layar lebar -->
+{{--
+    Ministepper satu baris. Lingkaran dan label ditaruh dalam KOLOM yang sama persis
+    (flex-1 berisi keduanya) supaya label selalu center pas di bawah lingkarannya —
+    garis penghubung digambar terpisah di belakang (absolute), bukan digabung satu
+    wrapper dengan lingkaran, karena itu yang sebelumnya bikin lingkaran nempel ke
+    kiri kolom sementara labelnya center, jadi keduanya tidak sejajar.
+--}}
+@php $n = count($stepStates); @endphp
 <div class="soft-card mb-4 p-3 sm:p-4">
-    <div class="grid grid-cols-3 gap-y-3 sm:grid-cols-6 sm:gap-y-0">
-        @foreach($steps as $key => $label)
-            @php
-                $idx = $loop->index;
-                $isDone = $idx < $maxIndex || ($idx === $maxIndex && $isTerminalIssue);
-                $isCurrent = !$isTerminalIssue && $idx === $currentIndex;
-            @endphp
-            <div class="flex flex-col items-center px-1 text-center">
-                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold
-                    {{ $isCurrent ? 'bg-emerald-600 text-white ring-2 ring-emerald-100' : ($isDone ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-400') }}">
-                    @if($isDone && !$isCurrent)
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    @else
-                        {{ $idx + 1 }}
-                    @endif
-                </span>
-                <span class="mt-1.5 text-[11px] font-medium leading-tight {{ $isCurrent ? 'text-emerald-700' : ($isDone ? 'text-slate-700' : 'text-slate-400') }}">
-                    {{ $label }}
-                </span>
-            </div>
-        @endforeach
+    <div class="relative">
+        {{-- Garis penghubung: dari titik tengah lingkaran pertama sampai titik tengah lingkaran terakhir. --}}
+        <div class="absolute top-3 flex h-0.5 -translate-y-1/2" style="left: {{ 100 / (2 * $n) }}%; right: {{ 100 / (2 * $n) }}%;">
+            @for($i = 0; $i < $n - 1; $i++)
+                <div class="flex-1 {{ $stepStates[$i]['done'] ? 'bg-emerald-500' : 'bg-slate-200' }}"></div>
+            @endfor
+        </div>
+
+        <div class="relative flex">
+            @foreach($stepStates as $idx => $state)
+                <div class="flex flex-1 flex-col items-center gap-1.5">
+                    <span class="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold
+                        {{ $state['current'] ? 'bg-emerald-600 text-white ring-4 ring-emerald-100' : ($state['done'] ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-400') }}"
+                        title="{{ $state['label'] }}">
+                        @if($state['done'] && !$state['current'])
+                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        @else
+                            {{ $idx + 1 }}
+                        @endif
+                    </span>
+                    {{-- Label disembunyikan di HP (diganti ringkasan di bawah), tampil dari sm ke atas. --}}
+                    <span class="hidden px-0.5 text-center text-[10.5px] font-medium leading-tight sm:block {{ $state['current'] ? 'text-emerald-700' : ($state['done'] ? 'text-slate-600' : 'text-slate-400') }}">
+                        {{ $state['label'] }}
+                    </span>
+                </div>
+            @endforeach
+        </div>
     </div>
+
+    {{-- Ringkasan langkah saat ini, khusus HP (menggantikan label penuh di atas). --}}
+    @if($currentIndex >= 0)
+    <p class="mt-1.5 text-center text-[12px] font-semibold text-emerald-700 sm:hidden">
+        Langkah {{ $currentIndex + 1 }}/{{ $n }} &middot; {{ $stepStates[$currentIndex]['label'] }}
+    </p>
+    @endif
 </div>

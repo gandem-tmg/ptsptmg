@@ -18,15 +18,15 @@
     </div>
 @elseif($permohonan->lampiranPermohonan->isEmpty())
     @if($permohonan->sumber_pengajuan === 'walk_in')
-        <p class="mb-3 text-xs text-slate-500">Pengajuan offline — kelengkapan persyaratan sudah dicek fisik & dikonfirmasi langsung oleh petugas loket saat pengajuan.</p>
-        <div class="space-y-2">
+        <div class="mb-3 flex items-start gap-2 rounded-lg bg-emerald-50 px-3.5 py-2.5 text-xs text-emerald-700">
+            <svg class="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            <span>Pengajuan offline — semua persyaratan di bawah sudah dicek fisik &amp; dikonfirmasi langsung oleh petugas loket saat pengajuan.</span>
+        </div>
+        <div class="divide-y divide-slate-100">
             @forelse($permohonan->layanan->persyaratan as $p)
-            <div class="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-4 py-3">
-                <p class="text-sm font-medium text-slate-900">{{ $p->nama_persyaratan }}</p>
-                <span class="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-emerald-600">
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    Sudah diverifikasi
-                </span>
+            <div class="flex items-center gap-2.5 py-2">
+                <svg class="h-4 w-4 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <p class="text-sm text-slate-700">{{ $p->nama_persyaratan }}</p>
             </div>
             @empty
             <p class="text-sm text-slate-500">Layanan ini tidak memerlukan persyaratan khusus.</p>

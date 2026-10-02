@@ -144,6 +144,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('layanan', \App\Http\Controllers\SeksiLayananController::class)->only(['index', 'show', 'edit', 'update']);
 
         Route::get('permohonan', [PermohonanController::class, 'index'])->name('permohonan.index');
+        Route::get('permohonan-daftar', [PermohonanController::class, 'daftarSeksi'])->name('permohonan.daftar');
         Route::get('permohonan/{permohonan}', [PermohonanController::class, 'show'])->name('permohonan.show');
         Route::get('permohonan/{permohonan}/pdf', [PermohonanController::class, 'downloadPdf'])->name('permohonan.pdf');
 

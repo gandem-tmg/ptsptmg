@@ -145,20 +145,25 @@ class Permohonan extends Model
      * Sebelumnya view memanggil $permohonan->lokasi_saat_ini padahal
      * accessor-nya tidak pernah ada, jadi kolom itu selalu tampil kosong.
      *
+     * - Status final (selesai / ditolak / dibatalkan)      -> "-".
+     *   (Dicek PALING DULU — status final harus selalu menang, apa pun isi
+     *   current_seksi_id. Sebelumnya current_seksi_id dicek duluan, jadi kalau
+     *   ada permohonan yang pernah "Update Manual" ke Selesai di Seksi lalu
+     *   current_seksi_id-nya tidak sempat dikosongkan, status selesai jadi
+     *   tetap tampil nyangkut di seksi lama — bug yang sempat dilaporkan.)
      * - Ada seksi aktif (didisposisikan / diproses_seksi) -> nama seksinya.
      * - Menunggu pemohon melengkapi berkas (dikembalikan)  -> Pemohon.
-     * - Status final (selesai / ditolak / dibatalkan)      -> "-".
      * - Selain itu (diajukan, verifikasi, selesai_seksi,
      *   verifikasi_akhir, status lama)                     -> PTSP.
      */
     public function getLokasiSaatIniAttribute(): string
     {
-        if ($this->current_seksi_id && $this->currentSeksi) {
-            return $this->currentSeksi->nama_seksi;
-        }
-
         if (in_array($this->status, self::STATUS_FINAL, true)) {
             return '-';
+        }
+
+        if ($this->current_seksi_id && $this->currentSeksi) {
+            return $this->currentSeksi->nama_seksi;
         }
 
         if ($this->status === 'dikembalikan') {
@@ -166,6 +171,39 @@ class Permohonan extends Model
         }
 
         return 'PTSP';
+    }
+
+    /**
+     * Sudah berapa lama permohonan ini berada di status saat ini — dipakai
+     * di sidebar "Aksi PTSP" supaya petugas bisa menilai sekilas permohonan
+     * mana yang sudah lama mengendap di satu tahap. Dihitung dari entri
+     * riwayatStatus TERAKHIR (riwayatStatus di-order ascending, jadi entri
+     * terakhir = kapan status saat ini mulai berlaku).
+     *
+     * Ditulis manual (bukan pakai Carbon::diffForHumans) supaya hasilnya
+     * selalu dalam Bahasa Indonesia terlepas dari APP_LOCALE server, karena
+     * APP_LOCALE di project ini default "en" sementara seluruh teks di
+     * tampilan sudah dalam Bahasa Indonesia.
+     */
+    public function getLamaDiStatusIniAttribute(): ?string
+    {
+        $mulai = $this->riwayatStatus->last()?->created_at;
+
+        if (!$mulai) {
+            return null;
+        }
+
+        $menit = $mulai->diffInMinutes(now());
+        if ($menit < 60) {
+            return $menit < 1 ? 'baru saja' : $menit . ' menit';
+        }
+
+        $jam = $mulai->diffInHours(now());
+        if ($jam < 24) {
+            return $jam . ' jam';
+        }
+
+        return $mulai->diffInDays(now()) . ' hari';
     }
 
     public function lampiranPermohonan(): HasMany

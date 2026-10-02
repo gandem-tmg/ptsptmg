@@ -57,13 +57,17 @@
         <x-slot:icon><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></x-slot:icon>
         Statistik
     </x-sidebar-link>
-    <x-sidebar-link :href="route('seksi.permohonan.index')" :active="request()->routeIs('seksi.permohonan.*') || request()->routeIs('seksi.surat.*')">
+    <x-sidebar-link :href="route('seksi.permohonan.index')" :active="request()->routeIs('seksi.permohonan.index') || request()->routeIs('seksi.permohonan.show') || request()->routeIs('seksi.surat.*')">
         <x-slot:icon><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-3.5a1 1 0 00-.9.55l-.7 1.4a1 1 0 01-.9.55h-3a1 1 0 01-.9-.55l-.7-1.4a1 1 0 00-.9-.55H4" /></svg></x-slot:icon>
-        Permohonan Seksi
+        Permohonan Terbaru
+    </x-sidebar-link>
+    <x-sidebar-link :href="route('seksi.permohonan.daftar')" :active="request()->routeIs('seksi.permohonan.daftar')">
+        <x-slot:icon><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" /></svg></x-slot:icon>
+        Daftar Permohonan
     </x-sidebar-link>
     <x-sidebar-link :href="route('seksi.layanan.index')" :active="request()->routeIs('seksi.layanan.*')">
         <x-slot:icon><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg></x-slot:icon>
-        Layanan Seksi Saya
+        Daftar Layanan
     </x-sidebar-link>
 @elseif(Auth::user()->role === 'pimpinan')
     <p class="sidebar-label mb-2 mt-6 flex items-center gap-1.5 px-3 text-xs font-bold uppercase tracking-wider text-emerald-700/80"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Monitoring</p>
