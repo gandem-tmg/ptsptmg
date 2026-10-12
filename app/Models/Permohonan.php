@@ -78,6 +78,14 @@ class Permohonan extends Model
         'nama_layanan_manual',
         'deskripsi_layanan_manual',
         'kelengkapan_manual',
+        // --- Kolom integrasi webhook Layanan Madrasah ---
+        'sumber',
+        'id_layanan_asal',
+        'tipe_layanan_asal',
+        'nsm',
+        'nama_madrasah',
+        'link_drive_berkas',
+        'link_drive_rekom',
     ];
 
     protected $casts = [
@@ -139,73 +147,6 @@ class Permohonan extends Model
         return $this->layanan->seksi->nama_seksi ?? '-';
     }
 
-    /**
-     * Posisi permohonan saat ini, untuk ditampilkan di kolom "Sedang
-     * Ditangani" / "Sedang di Seksi" (detail, kartu daftar, lacak tiket).
-     * Sebelumnya view memanggil $permohonan->lokasi_saat_ini padahal
-     * accessor-nya tidak pernah ada, jadi kolom itu selalu tampil kosong.
-     *
-     * - Status final (selesai / ditolak / dibatalkan)      -> "-".
-     *   (Dicek PALING DULU — status final harus selalu menang, apa pun isi
-     *   current_seksi_id. Sebelumnya current_seksi_id dicek duluan, jadi kalau
-     *   ada permohonan yang pernah "Update Manual" ke Selesai di Seksi lalu
-     *   current_seksi_id-nya tidak sempat dikosongkan, status selesai jadi
-     *   tetap tampil nyangkut di seksi lama — bug yang sempat dilaporkan.)
-     * - Ada seksi aktif (didisposisikan / diproses_seksi) -> nama seksinya.
-     * - Menunggu pemohon melengkapi berkas (dikembalikan)  -> Pemohon.
-     * - Selain itu (diajukan, verifikasi, selesai_seksi,
-     *   verifikasi_akhir, status lama)                     -> PTSP.
-     */
-    public function getLokasiSaatIniAttribute(): string
-    {
-        if (in_array($this->status, self::STATUS_FINAL, true)) {
-            return '-';
-        }
-
-        if ($this->current_seksi_id && $this->currentSeksi) {
-            return $this->currentSeksi->nama_seksi;
-        }
-
-        if ($this->status === 'dikembalikan') {
-            return 'Pemohon (melengkapi berkas)';
-        }
-
-        return 'PTSP';
-    }
-
-    /**
-     * Sudah berapa lama permohonan ini berada di status saat ini — dipakai
-     * di sidebar "Aksi PTSP" supaya petugas bisa menilai sekilas permohonan
-     * mana yang sudah lama mengendap di satu tahap. Dihitung dari entri
-     * riwayatStatus TERAKHIR (riwayatStatus di-order ascending, jadi entri
-     * terakhir = kapan status saat ini mulai berlaku).
-     *
-     * Ditulis manual (bukan pakai Carbon::diffForHumans) supaya hasilnya
-     * selalu dalam Bahasa Indonesia terlepas dari APP_LOCALE server, karena
-     * APP_LOCALE di project ini default "en" sementara seluruh teks di
-     * tampilan sudah dalam Bahasa Indonesia.
-     */
-    public function getLamaDiStatusIniAttribute(): ?string
-    {
-        $mulai = $this->riwayatStatus->last()?->created_at;
-
-        if (!$mulai) {
-            return null;
-        }
-
-        $menit = $mulai->diffInMinutes(now());
-        if ($menit < 60) {
-            return $menit < 1 ? 'baru saja' : $menit . ' menit';
-        }
-
-        $jam = $mulai->diffInHours(now());
-        if ($jam < 24) {
-            return $jam . ' jam';
-        }
-
-        return $mulai->diffInDays(now()) . ' hari';
-    }
-
     public function lampiranPermohonan(): HasMany
     {
         return $this->hasMany(LampiranPermohonan::class, 'permohonan_id');
@@ -243,6 +184,15 @@ class Permohonan extends Model
     public function scopeSelesaiBelumSurvei($query)
     {
         return $query->where('status', 'selesai')->whereDoesntHave('surveiRespon');
+    }
+
+    /**
+     * Permohonan yang masuk lewat webhook integrasi Layanan Madrasah
+     * (bukan diajukan langsung oleh pemohon lewat form PTSP).
+     */
+    public function scopeDariLayananMadrasah($query)
+    {
+        return $query->where('sumber', 'layanan_madrasah');
     }
 
     /**
